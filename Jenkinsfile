@@ -40,7 +40,7 @@ pipeline{
 					git credentialsId: '6cd55045-240e-41cc-b9c2-6859361c2b09', url: 'https://github.com/felpshirou/tasks-api-test'
 					bat 'mvn test'
 				
-			}
+				}
 		}
 		stage ('Deploy Frontend'){
 			steps{
@@ -49,6 +49,15 @@ pipeline{
 				bat 'mvn clean package'
 				deploy adapters: [tomcat8(credentialsId: 'TomcatLogin', path: '', url: 'http://localhost:8001')], contextPath: 'tasks', war: 'target/tasks.war'
 					}
+				}
+		}
+		stage ('Functional Test'){
+			steps{
+					dir('functional-test'){
+					git credentialsId: '6cd55045-240e-41cc-b9c2-6859361c2b09', url: 'https://github.com/felpshirou/tasks-functional-tests'
+					bat 'mvn test'
+						}
+				
 				}
 		}
 	}
