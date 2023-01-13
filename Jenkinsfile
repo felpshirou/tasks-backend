@@ -42,5 +42,16 @@ pipeline{
 				
 			}
 		}
+		stage ('Deploy Frontend'){
+			steps{
+				dir('frontend'){
+				git credentialsId: '6cd55045-240e-41cc-b9c2-6859361c2b09', url: 'https://github.com/felpshirou/tasks-frontend'
+				bat 'mvn clean package'
+				deploy adapters: [tomcat8(credentialsId: 'TomcatLogin', path: '', url: 'http://localhost:8001')], contextPath: 'tasks', war: 'target/tasks.war'
+					}
+				}
+		}
 	}
 }
+
+https://github.com/felpshirou/tasks-frontend
