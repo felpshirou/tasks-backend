@@ -53,5 +53,3 @@ pipeline{
 		}
 	}
 }
-
-https://github.com/felpshirou/tasks-frontend
