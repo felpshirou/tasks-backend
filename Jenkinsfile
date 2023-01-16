@@ -68,12 +68,12 @@ pipeline{
 		}
 		stage ('Health Check'){
 			steps{
-					sleep(5)
+					sleep(10)
 					dir('functional-test'){
 					bat 'mvn verify -Dskip.surefire.tests'
-						}
-				
 				}
+				
+			}
 		}
 	}
 	post{
@@ -82,6 +82,9 @@ pipeline{
 		}
 		unsuccessful{
 			emailext attachLog: true, body: 'Veja o Log abaixo.', subject: 'Build $BUILD_NUMBER has failed', to: 'felpaut@gmail.com'
+		}
+		fixed{
+			emailext attachLog: true, body: 'Veja o Log abaixo.', subject: 'Build $BUILD_NUMBER success', to: 'felpaut@gmail.com'
 		}
 	}
 }
